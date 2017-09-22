@@ -1,0 +1,11 @@
+{
+  "name": "cors-proxy",
+  "version": "1.0.0",
+  "description": "CORS proxy",
+  "dependencies": {
+    "request": "^2.69.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^3.9.0"
+  }
+}

@@ -1,8 +1,12 @@
 class Index {
     constructor() {
-        console.log('@@@@@@@@');
-        alert('!!!!!!!!');
+        console.log('--start--');
+
+        this.kinopoisk = new Kinopoisk();
+        this.kinopoisk.getInfoById(103507);
     }
 }
 
-let index = new Index();
+$(document).ready(() => {
+    let index = new Index();
+});
