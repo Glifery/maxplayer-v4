@@ -1,0 +1,32 @@
+service: google-music
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  timeout: 300
+  stage: dev
+  region: eu-central-1
+  environment:
+    foo: 123
+
+functions:
+  test:
+    name: google-music-test
+    handler: handler.test
+    events:
+      - http:
+          path: googlemusic/test
+          method: get
+          cors: true
+  typescript:
+    name: google-music-typescript
+    handler: handler.typescript
+    events:
+      - http:
+          path: googlemusic/typescript
+          method: get
+          cors: true

@@ -1,0 +1,13 @@
+{
+  "name": "google-music",
+  "version": "1.0.0",
+  "description": "Google Music",
+  "dependencies": {
+    "playmusic": "git+https://github.com/jamon/playmusic.git"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "0.0.17",
+    "serverless-offline": "^3.16.0",
+    "serverless-plugin-typescript": "^1.1.3"
+  }
+}
