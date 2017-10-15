@@ -1,6 +1,7 @@
 import {GoogleMusicGateway} from "./GoogleMusicGateway";
 import {Song} from "../type/google-music/Song";
 import {Entries} from "../type/google-music/Entries";
+import {TrackQuery} from "../type/google-music/TrackQuery";
 
 export class GoogleMusic {
     private gateway: GoogleMusicGateway;
@@ -18,20 +19,45 @@ export class GoogleMusic {
         return this.requestEntryPoint;
     }
 
-    getTrackStreamUrl (query: string): Promise<string> {
+    getTrackStreamUrl (query: TrackQuery): Promise<string> {
+        let queryString: string     = query.track + ' - ' + query.artist;
+        let queryArtist: string     = query.artist.toLowerCase();
+        let queryTrack: string      = query.track.toLowerCase();
+
         return this
             .initGatewayRequest()
-            .then(() => this.gateway.search(query))
+            .then(() => this.gateway.search(queryString))
             .then((entries: Entries) => {
+                let bestCandidate: Song|null = null;
+
                 for (let index in entries) {
                     let entry: Song = entries[index];
 
-                    if (entry.hasOwnProperty('track')) {
+                    if ('1' !== entry.type) {
+                        continue;
+                    }
+
+                    let entryArtist: string = entry.track.artist.toLowerCase();
+                    let entryTrack: string  = entry.track.title.toLowerCase();
+
+                    if ((entryTrack === queryTrack) && (entryArtist === queryArtist)) {
+                        console.log(`Found exact track #${index+1}: '${entry.track.artist} - ${entry.track.title}'`);
+
                         return Promise.resolve(entry.track.storeId);
+                    } else if ((null === bestCandidate) && (entryTrack === queryTrack)) {
+                        bestCandidate = entry;
+                    } else if ((null === bestCandidate) && (0 === entryTrack.indexOf(queryTrack))) {
+                        bestCandidate = entry;
                     }
                 }
 
-                return Promise.reject(`Unable to find track by search query '${query}'`);
+                if (null !== bestCandidate) {
+                    console.log(`Found best candidate: '${bestCandidate.track.artist} - ${bestCandidate.track.title}'`);
+
+                    return Promise.resolve(bestCandidate.track.storeId);
+                }
+
+                return Promise.reject(`Unable to find track by search query '${queryString}'`);
             })
             .then((storeId: string) => this.gateway.getStreamUrl(storeId))
         ;

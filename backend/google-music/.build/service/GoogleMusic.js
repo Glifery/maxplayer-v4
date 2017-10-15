@@ -11,17 +11,37 @@ class GoogleMusic {
         return this.requestEntryPoint;
     }
     getTrackStreamUrl(query) {
+        let queryString = query.track + ' - ' + query.artist;
+        let queryArtist = query.artist.toLowerCase();
+        let queryTrack = query.track.toLowerCase();
         return this
             .initGatewayRequest()
-            .then(() => this.gateway.search(query))
+            .then(() => this.gateway.search(queryString))
             .then((entries) => {
+            let bestCandidate = null;
             for (let index in entries) {
                 let entry = entries[index];
-                if (entry.hasOwnProperty('track')) {
+                if ('1' !== entry.type) {
+                    continue;
+                }
+                let entryArtist = entry.track.artist.toLowerCase();
+                let entryTrack = entry.track.title.toLowerCase();
+                if ((entryTrack === queryTrack) && (entryArtist === queryArtist)) {
+                    console.log(`Found exact track #${index + 1}: '${entry.track.artist} - ${entry.track.title}'`);
                     return Promise.resolve(entry.track.storeId);
                 }
+                else if ((null === bestCandidate) && (entryTrack === queryTrack)) {
+                    bestCandidate = entry;
+                }
+                else if ((null === bestCandidate) && (0 === entryTrack.indexOf(queryTrack))) {
+                    bestCandidate = entry;
+                }
             }
-            return Promise.reject(`Unable to find track by search query '${query}'`);
+            if (null !== bestCandidate) {
+                console.log(`Found best candidate: '${bestCandidate.track.artist} - ${bestCandidate.track.title}'`);
+                return Promise.resolve(bestCandidate.track.storeId);
+            }
+            return Promise.reject(`Unable to find track by search query '${queryString}'`);
         })
             .then((storeId) => this.gateway.getStreamUrl(storeId));
     }
