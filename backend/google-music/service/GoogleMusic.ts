@@ -2,6 +2,7 @@ import {GoogleMusicGateway} from "./GoogleMusicGateway";
 import {Song} from "../type/google-music/Song";
 import {Entries} from "../type/google-music/Entries";
 import {TrackQuery} from "../type/google-music/TrackQuery";
+import {TrackResult} from "../type/google-music/TrackResult";
 
 export class GoogleMusic {
     private gateway: GoogleMusicGateway;
@@ -19,7 +20,7 @@ export class GoogleMusic {
         return this.requestEntryPoint;
     }
 
-    getTrackStreamUrl (query: TrackQuery): Promise<string> {
+    getTrackStreamUrl (query: TrackQuery): Promise<TrackResult> {
         let queryString: string     = query.track + ' - ' + query.artist;
         let queryArtist: string     = query.artist.toLowerCase();
         let queryTrack: string      = query.track.toLowerCase();
@@ -43,7 +44,7 @@ export class GoogleMusic {
                     if ((entryTrack === queryTrack) && (entryArtist === queryArtist)) {
                         console.log(`Found exact track #${index+1}: '${entry.track.artist} - ${entry.track.title}'`);
 
-                        return Promise.resolve(entry.track.storeId);
+                        return Promise.resolve(entry);
                     } else if ((null === bestCandidate) && (entryTrack === queryTrack)) {
                         bestCandidate = entry;
                     } else if ((null === bestCandidate) && (0 === entryTrack.indexOf(queryTrack))) {
@@ -54,12 +55,24 @@ export class GoogleMusic {
                 if (null !== bestCandidate) {
                     console.log(`Found best candidate: '${bestCandidate.track.artist} - ${bestCandidate.track.title}'`);
 
-                    return Promise.resolve(bestCandidate.track.storeId);
+                    return Promise.resolve(bestCandidate);
                 }
 
                 return Promise.reject(`Unable to find track by search query '${queryString}'`);
             })
-            .then((storeId: string) => this.gateway.getStreamUrl(storeId))
+            .then((song: Song) => this.gateway
+                .getStreamUrl(song.track.storeId)
+                .then((streamUrl: string) => {
+                    let result: TrackResult = {
+                        artist: song.track.artist,
+                        track: song.track.title,
+                        duration: Math.round(song.track.durationMillis * 1000),
+                        streamUrl: streamUrl
+                    };
+
+                    return result;
+                })
+             )
         ;
     }
 }

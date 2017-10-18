@@ -12,11 +12,13 @@ class TypescriptHandler {
         };
         googleMusic
             .getTrackStreamUrl(query)
-            .then((streamUrl) => {
+            .then((result) => {
             const response = {
                 statusCode: 200,
                 body: JSON.stringify({
-                    streamUrl: streamUrl
+                    artist: result.artist,
+                    track: result.track,
+                    streamUrl: result.streamUrl
                 })
             };
             callback(null, response);

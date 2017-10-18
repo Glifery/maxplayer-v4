@@ -28,7 +28,7 @@ class GoogleMusic {
                 let entryTrack = entry.track.title.toLowerCase();
                 if ((entryTrack === queryTrack) && (entryArtist === queryArtist)) {
                     console.log(`Found exact track #${index + 1}: '${entry.track.artist} - ${entry.track.title}'`);
-                    return Promise.resolve(entry.track.storeId);
+                    return Promise.resolve(entry);
                 }
                 else if ((null === bestCandidate) && (entryTrack === queryTrack)) {
                     bestCandidate = entry;
@@ -39,11 +39,21 @@ class GoogleMusic {
             }
             if (null !== bestCandidate) {
                 console.log(`Found best candidate: '${bestCandidate.track.artist} - ${bestCandidate.track.title}'`);
-                return Promise.resolve(bestCandidate.track.storeId);
+                return Promise.resolve(bestCandidate);
             }
             return Promise.reject(`Unable to find track by search query '${queryString}'`);
         })
-            .then((storeId) => this.gateway.getStreamUrl(storeId));
+            .then((song) => this.gateway
+            .getStreamUrl(song.track.storeId)
+            .then((streamUrl) => {
+            let result = {
+                artist: song.track.artist,
+                track: song.track.title,
+                duration: Math.round(song.track.durationMillis * 1000),
+                streamUrl: streamUrl
+            };
+            return result;
+        }));
     }
 }
 exports.GoogleMusic = GoogleMusic;

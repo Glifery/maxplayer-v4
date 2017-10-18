@@ -3,6 +3,7 @@ import {GoogleMusicCredentials} from "../domain/GoogleMusicCredentials";
 import {GoogleMusicGateway} from "../service/GoogleMusicGateway";
 import {GoogleMusic} from "../service/GoogleMusic";
 import {TrackQuery} from "../type/google-music/TrackQuery";
+import {TrackResult} from "../type/google-music/TrackResult";
 
 export class TypescriptHandler implements Handler {
     handle (event: any, context: Context, callback: Callback): null {
@@ -22,11 +23,13 @@ export class TypescriptHandler implements Handler {
 
         googleMusic
             .getTrackStreamUrl(query)
-            .then((streamUrl: string) => {
+            .then((result: TrackResult) => {
                 const response: HandlerHttpResponse = {
                     statusCode: 200,
                     body: JSON.stringify({
-                        streamUrl: streamUrl
+                        artist: result.artist,
+                        track: result.track,
+                        streamUrl: result.streamUrl
                     })
                 };
 
