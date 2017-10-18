@@ -1,11 +1,13 @@
-import {Handler, Context, Callback, HandlerHttpResponse} from '../utils/Handler';
-import {GoogleMusicCredentials} from "../domain/GoogleMusicCredentials";
-import {GoogleMusicGateway} from "../service/GoogleMusicGateway";
-import {GoogleMusic} from "../service/GoogleMusic";
-import {TrackQuery} from "../type/google-music/TrackQuery";
-import {TrackResult} from "../type/google-music/TrackResult";
+import {Context, Callback} from "aws-lambda";
+import {HandlerInterface} from "../src/serverless/HandlerInterface";
+import {HttpResponse} from "../src/serverless/response/HttpResponse";
+import {GoogleMusicCredentials} from "../src/google-music/domain/GoogleMusicCredentials";
+import {GoogleMusicGateway} from "../src/google-music/service/GoogleMusicGateway";
+import {GoogleMusic} from "../src/google-music/service/GoogleMusic";
+import {TrackQuery} from "../src/google-music/type/TrackQuery";
+import {TrackResult} from "../src/google-music/type/TrackResult";
 
-export class TypescriptHandler implements Handler {
+export class TypescriptHandler implements HandlerInterface {
     handle (event: any, context: Context, callback: Callback): null {
         const googleMusic = new GoogleMusic(
             new GoogleMusicGateway(
@@ -24,7 +26,7 @@ export class TypescriptHandler implements Handler {
         googleMusic
             .getTrackStreamUrl(query)
             .then((result: TrackResult) => {
-                const response: HandlerHttpResponse = {
+                const response: HttpResponse = {
                     statusCode: 200,
                     body: JSON.stringify({
                         artist: result.artist,
@@ -40,7 +42,7 @@ export class TypescriptHandler implements Handler {
                     error = error.message;
                 }
 
-                const response: HandlerHttpResponse = {
+                const response: HttpResponse = {
                     statusCode: 200,
                     body: JSON.stringify({
                         error: error

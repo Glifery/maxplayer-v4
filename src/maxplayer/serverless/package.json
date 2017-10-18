@@ -1,0 +1,8 @@
+{
+  "name": "maxplayer-serverless",
+  "version": "1.0.0",
+  "description": "maksplayer serverless types",
+  "dependencies": {
+    "@types/aws-lambda": "0.0.17"
+  }
+}

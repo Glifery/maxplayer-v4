@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Google Music",
   "dependencies": {
-    "playmusic": "git+https://github.com/jamon/playmusic.git"
+    "maxplayer-serverless": "../../src/maxplayer/serverless",
+    "maxplayer-google-music": "../../src/maxplayer/google-music"
   },
   "devDependencies": {
-    "@types/aws-lambda": "0.0.17",
     "serverless-offline": "^3.16.0",
     "serverless-plugin-typescript": "^1.1.3"
   }

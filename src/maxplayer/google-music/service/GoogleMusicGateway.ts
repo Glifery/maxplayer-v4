@@ -1,9 +1,9 @@
 import {GoogleMusicCredentials} from "../domain/GoogleMusicCredentials";
 import * as playmusic from 'playmusic';
 // declare module 'playmusic';
-// declare module '../type/google-music/playmusic';
-import {Entries} from "../type/google-music/Entries";
-// import PlayMusic = require("../type/google-music/playmusic");
+// declare module '../type/playmusic';
+import {Entries} from "../type/Entries";
+// import PlayMusic = require("../type/playmusic");
 // declare const playmusic: any;
 
 export class GoogleMusicGateway {

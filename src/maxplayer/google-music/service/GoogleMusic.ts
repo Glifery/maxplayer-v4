@@ -1,8 +1,8 @@
 import {GoogleMusicGateway} from "./GoogleMusicGateway";
-import {Song} from "../type/google-music/Song";
-import {Entries} from "../type/google-music/Entries";
-import {TrackQuery} from "../type/google-music/TrackQuery";
-import {TrackResult} from "../type/google-music/TrackResult";
+import {Song} from "../type/Song";
+import {Entries} from "../type/Entries";
+import {TrackQuery} from "../type/TrackQuery";
+import {TrackResult} from "../type/TrackResult";
 
 export class GoogleMusic {
     private gateway: GoogleMusicGateway;
