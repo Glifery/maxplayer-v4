@@ -7,6 +7,7 @@ npm:
 	cd backend/google-music && npm install
 	cd src/maxplayer/serverless && npm install
 	cd src/maxplayer/google-music && npm install
+	cd src/maxplayer/spotify && npm install
 
 link:
 	rm -rf backend/google-music/node_modules/maxplayer-serverless

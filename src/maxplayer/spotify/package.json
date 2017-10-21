@@ -1,0 +1,17 @@
+{
+  "name": "maxplayer-spotify",
+  "version": "1.0.0",
+  "description": "Maxplayer Spotify provider",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "spotify-web-api-node": "^2.5.0"
+  },
+  "bin": {
+    "refresh-token": "refresh-token.js"
+  }
+}

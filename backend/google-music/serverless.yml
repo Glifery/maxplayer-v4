@@ -30,3 +30,11 @@ functions:
           path: googlemusic/typescript
           method: get
           cors: true
+  spotify:
+    name: google-music-spotify
+    handler: handler.spotify
+    events:
+      - http:
+          path: googlemusic/spotify
+          method: get
+          cors: true
