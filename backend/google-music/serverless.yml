@@ -38,3 +38,11 @@ functions:
           path: googlemusic/spotify
           method: get
           cors: true
+  spotifySearchAll:
+    name: google-music-spotify-search-all
+    handler: handler.spotifySearchAll
+    events:
+      - http:
+          path: googlemusic/spotify/search-all
+          method: get
+          cors: true
