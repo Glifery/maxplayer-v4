@@ -1,3 +1,3 @@
 export interface BaseResponse {
-    toString (): string;
+    expose (): any;
 }

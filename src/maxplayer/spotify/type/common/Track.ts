@@ -2,7 +2,7 @@ import {Artist} from "./short/Artist";
 import {Album} from "./Album";
 
 export type Track = {
-    albums: Album[],
+    album: Album,
     artists: Artist[],
     available_markets: string[],
     disc_number: number,

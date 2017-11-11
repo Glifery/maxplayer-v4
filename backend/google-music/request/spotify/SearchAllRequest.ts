@@ -5,7 +5,7 @@ import {Options} from "../../src/spotify/type/common/Options";
 export class SearchAllRequest {
     private query: string;
 
-    private constructor (query) {
+    private constructor (query: string) {
         this.query = query;
     }
 

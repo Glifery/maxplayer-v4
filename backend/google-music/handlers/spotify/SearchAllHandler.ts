@@ -14,7 +14,7 @@ export class SearchAllHandler implements HandlerInterface {
     handle (event: HttpRequest, context: Context, callback: Callback): null {
         let spotify = new SpotifyWebApi();
 
-        spotify.setAccessToken('BQCeUPXpTgRHBUfEA40l4LbxpR5XJ4ppPWPs38UfotVvR-AhvjBjZ97yptX3Yhtgjc2_u0-3xov-z9gfYmZbcw');
+        spotify.setAccessToken('BQBHTHafjb9hyW88rsC1sWLyX6-eHpeG8IXQ4Zw6Ci6mV8MUB4HiBuemuSxdhsqOkJC-XtJKDL17MRLCiNTK6g');
 
         let request: SearchAllRequest = SearchAllRequest.createFromHttpRequest(event);
 
@@ -29,7 +29,7 @@ export class SearchAllHandler implements HandlerInterface {
             .then((result: SearchAllResponse) => {
                 const response: HttpResponse = {
                     statusCode: 200,
-                    body: result.toString()
+                    body: JSON.stringify(result.expose())
                 };
 
                 callback(null, response);
@@ -38,6 +38,9 @@ export class SearchAllHandler implements HandlerInterface {
                 if (error.hasOwnProperty('statusCode') && error.statusCode == 401) {
                     error = 'Unauthorized: update access token by calling \'https://accounts.spotify.com/api/token\' with \'Basic XXXX\' bearer';
                 }
+
+                console.log('ERROR!!!!!!!!!!');
+                console.log(error);
 
                 if (error.hasOwnProperty('message')) {
                     error = error.message;
