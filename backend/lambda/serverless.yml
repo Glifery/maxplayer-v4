@@ -14,35 +14,19 @@ provider:
     foo: 123
 
 functions:
-  test:
-    name: google-music-test
-    handler: handler.test
-    events:
-      - http:
-          path: googlemusic/test
-          method: get
-          cors: true
-  typescript:
-    name: google-music-typescript
-    handler: handler.typescript
-    events:
-      - http:
-          path: googlemusic/typescript
-          method: get
-          cors: true
-  spotify:
-    name: google-music-spotify
-    handler: handler.spotify
-    events:
-      - http:
-          path: googlemusic/spotify
-          method: get
-          cors: true
   spotifySearchAll:
-    name: google-music-spotify-search-all
+    name: spotify-search-all
     handler: handler.spotifySearchAll
     events:
       - http:
-          path: googlemusic/spotify/search-all
+          path: spotify/search-all
+          method: get
+          cors: true
+  googleMusicGetStream:
+    name: google-music-get-stream
+    handler: handler.googleMusicGetStream
+    events:
+      - http:
+          path: googlemusic/stream
           method: get
           cors: true

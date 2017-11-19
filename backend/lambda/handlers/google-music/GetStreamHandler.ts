@@ -1,13 +1,13 @@
 import {Context, Callback} from "aws-lambda";
-import {HandlerInterface} from "../src/serverless/HandlerInterface";
-import {HttpResponse} from "../src/serverless/response/HttpResponse";
-import {GoogleMusicCredentials} from "../src/google-music/domain/GoogleMusicCredentials";
-import {GoogleMusicGateway} from "../src/google-music/service/GoogleMusicGateway";
-import {GoogleMusic} from "../src/google-music/service/GoogleMusic";
-import {TrackQuery} from "../src/google-music/type/TrackQuery";
-import {TrackResult} from "../src/google-music/type/TrackResult";
+import {HandlerInterface} from "../../src/serverless/HandlerInterface";
+import {HttpResponse} from "../../src/serverless/response/HttpResponse";
+import {GoogleMusicCredentials} from "../../src/google-music/domain/GoogleMusicCredentials";
+import {GoogleMusicGateway} from "../../src/google-music/service/GoogleMusicGateway";
+import {GoogleMusic} from "../../src/google-music/service/GoogleMusic";
+import {TrackQuery} from "../../src/google-music/type/TrackQuery";
+import {TrackResult} from "../../src/google-music/type/TrackResult";
 
-export class TypescriptHandler implements HandlerInterface {
+export class GetStreamHandler implements HandlerInterface {
     handle (event: any, context: Context, callback: Callback): null {
         const googleMusic = new GoogleMusic(
             new GoogleMusicGateway(

@@ -14,7 +14,7 @@ export class SearchAllHandler implements HandlerInterface {
     handle (event: HttpRequest, context: Context, callback: Callback): null {
         let spotify = new SpotifyWebApi();
 
-        spotify.setAccessToken('BQBHTHafjb9hyW88rsC1sWLyX6-eHpeG8IXQ4Zw6Ci6mV8MUB4HiBuemuSxdhsqOkJC-XtJKDL17MRLCiNTK6g');
+        spotify.setAccessToken('BQB-VEI6N7aJtnjM1Q7w7pemIpNfIJ0rXqg-bb4Gr5yVSD32WYaIdCfqql8GQ5vOpQta0GfMpAauG91Atcx_xQ');
 
         let request: SearchAllRequest = SearchAllRequest.createFromHttpRequest(event);
 
