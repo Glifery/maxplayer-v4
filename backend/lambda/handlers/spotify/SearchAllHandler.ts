@@ -14,13 +14,14 @@ export class SearchAllHandler implements HandlerInterface {
     handle (event: HttpRequest, context: Context, callback: Callback): null {
         let spotify = new SpotifyWebApi();
 
-        spotify.setAccessToken('BQB-VEI6N7aJtnjM1Q7w7pemIpNfIJ0rXqg-bb4Gr5yVSD32WYaIdCfqql8GQ5vOpQta0GfMpAauG91Atcx_xQ');
+        spotify.setAccessToken(process.env.spotify_access_token);
 
         let request: SearchAllRequest = SearchAllRequest.createFromHttpRequest(event);
 
         console.log(`Doing search on 'query: ${request.getQuery()}' ->`);
 
-        spotify.search(request.getQuery(), request.getSearchedTypes(), request.getOptions())
+        spotify
+            .search(request.getQuery(), request.getSearchedTypes(), request.getOptions())
             .then((data: SpotifyResponse) => {
                 console.log('Got response from Spotify --->', data.body);
 

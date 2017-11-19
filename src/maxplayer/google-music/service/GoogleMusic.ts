@@ -20,7 +20,7 @@ export class GoogleMusic {
         return this.requestEntryPoint;
     }
 
-    getTrackStreamUrl (query: TrackQuery): Promise<TrackResult> {
+    public getTrackStreamUrl (query: TrackQuery): Promise<TrackResult> {
         let queryString: string     = query.track + ' - ' + query.artist;
         let queryArtist: string     = query.artist.toLowerCase();
         let queryTrack: string      = query.track.toLowerCase();
@@ -70,7 +70,7 @@ export class GoogleMusic {
                         streamUrl: streamUrl
                     };
 
-                    return result;
+                    return Promise.resolve(result);
                 })
              )
         ;

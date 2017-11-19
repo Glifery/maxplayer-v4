@@ -3,5 +3,4 @@
 *node_modules*
 *.serverless*
 npm-debug.log
-*/config/*.yml
-!*/config/*.dist
+backend/lambda/config/*.yml

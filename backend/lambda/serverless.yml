@@ -4,6 +4,11 @@ plugins:
   - serverless-offline
   - serverless-plugin-typescript
 
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  region: ${opt:region, self:provider.region}
+  config: ${file(./config/parameters_${self:custom.stage}.yml)}
+
 provider:
   name: aws
   runtime: nodejs6.10
@@ -17,6 +22,8 @@ functions:
   spotifySearchAll:
     name: spotify-search-all
     handler: handler.spotifySearchAll
+    environment:
+      spotify_access_token: ${self:custom.config.credentials.spotify.access_token}
     events:
       - http:
           path: spotify/search-all
@@ -25,6 +32,9 @@ functions:
   googleMusicGetStream:
     name: google-music-get-stream
     handler: handler.googleMusicGetStream
+    environment:
+      google_android_id: ${self:custom.config.credentials.google_music.android_id}
+      google_master_token: ${self:custom.config.credentials.google_music.master_token}
     events:
       - http:
           path: googlemusic/stream
