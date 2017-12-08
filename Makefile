@@ -1,5 +1,8 @@
 OS := $(shell uname)
 
+install:
+	cd backend/lambda && sls dynamodb install
+
 offline:
 	cd backend/lambda && sls offline start
 

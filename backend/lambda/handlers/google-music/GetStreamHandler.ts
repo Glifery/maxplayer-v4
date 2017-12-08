@@ -51,7 +51,7 @@ export class GetStreamHandler implements HandlerInterface {
                     })
                 };
 
-                callback(null, response);
+                callback(error, response);
             })
         ;
 

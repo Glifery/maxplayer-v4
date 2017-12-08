@@ -14,19 +14,19 @@ let clientSecret = args[1];
 clientId = clientId.replace('--clientId=', '');
 clientSecret = clientSecret.replace('--clientSecret=', '');
 
-let spotifyApi = new SpotifyWebApi({
+let spotify = new SpotifyWebApi({
     clientId : clientId,
     clientSecret : clientSecret
 });
 
 // Retrieve an access token.
-spotifyApi.clientCredentialsGrant()
+spotify.clientCredentialsGrant()
     .then(function(data) {
         console.log('The access token is: ' + data.body['access_token']);
         console.log('The access token expires in ' + data.body['expires_in']);
 
         // Save the access token so that it's used in future calls
-        spotifyApi.setAccessToken(data.body['access_token']);
+        spotify.setAccessToken(data.body['access_token']);
     }, function(err) {
         console.log('Something went wrong when retrieving an access token', err);
     })

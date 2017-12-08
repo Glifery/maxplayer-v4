@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "Google Music",
   "dependencies": {
-    "maxplayer-serverless": "../../src/maxplayer/serverless",
+    "aws-sdk": "^2.166.0",
     "maxplayer-google-music": "../../src/maxplayer/google-music",
+    "maxplayer-serverless": "../../src/maxplayer/serverless",
     "maxplayer-spotify": "../../src/maxplayer/spotify"
   },
   "devDependencies": {
+    "@types/node": "^8.0.57",
+    "serverless-dynamodb-local": "^0.2.26",
     "serverless-offline": "^3.16.0",
+    "serverless-offline-scheduler": "^0.3.3",
     "serverless-plugin-typescript": "^1.1.3"
   }
 }

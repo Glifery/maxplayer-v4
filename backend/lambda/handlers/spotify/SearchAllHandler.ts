@@ -54,7 +54,7 @@ export class SearchAllHandler implements HandlerInterface {
                     })
                 };
 
-                callback(null, response);
+                callback(error, response);
             })
         ;
 

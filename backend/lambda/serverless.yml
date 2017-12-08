@@ -1,13 +1,20 @@
 service: google-music
 
 plugins:
-  - serverless-offline
   - serverless-plugin-typescript
+  - serverless-dynamodb-local
+  - serverless-offline-scheduler
+  - serverless-offline
 
 custom:
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
   config: ${file(./config/parameters_${self:custom.stage}.yml)}
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
 
 provider:
   name: aws
@@ -18,7 +25,31 @@ provider:
   environment:
     foo: 123
 
+resources:
+  Resources:
+    spotifyAccessTokenTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: spotifyAccessToken
+        AttributeDefinitions:
+          - AttributeName: primaryKey
+            AttributeType: S
+        KeySchema:
+          - AttributeName: primaryKey
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
 functions:
+  spotifyRefreshToken:
+    name: spotify-refresh-token
+    handler: handler.spotifyRefreshToken
+    environment:
+      spotify_client_id: ${self:custom.config.credentials.spotify.client_id}
+      spotify_client_secret: ${self:custom.config.credentials.spotify.client_secret}
+    events:
+      - schedule: rate(50 minutes)
   spotifySearchAll:
     name: spotify-search-all
     handler: handler.spotifySearchAll
