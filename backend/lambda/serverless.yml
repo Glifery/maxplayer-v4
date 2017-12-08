@@ -29,6 +29,7 @@ resources:
   Resources:
     spotifyAccessTokenTable:
       Type: AWS::DynamoDB::Table
+      DeletionPolicy: Delete
       Properties:
         TableName: spotifyAccessToken
         AttributeDefinitions:
@@ -54,7 +55,8 @@ functions:
     name: spotify-search-all
     handler: handler.spotifySearchAll
     environment:
-      spotify_access_token: ${self:custom.config.credentials.spotify.access_token}
+      spotify_client_id: ${self:custom.config.credentials.spotify.client_id}
+      spotify_client_secret: ${self:custom.config.credentials.spotify.client_secret}
     events:
       - http:
           path: spotify/search-all

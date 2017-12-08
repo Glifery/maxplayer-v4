@@ -3,6 +3,13 @@ import {AccessToken} from "../src/spotify/type/util/AccessToken";
 import {DynamoDB} from "aws-sdk";
 import DocumentClient = DynamoDB.DocumentClient;
 
+type dynamoDbGet = {
+    Item: {
+        primaryKey: string,
+        data: AccessToken
+    }
+}
+
 export class DynamoDbTokenRepository implements TokenRepositoryInterface {
     private dynamoDb: DocumentClient;
     private tableName: string;
@@ -18,11 +25,39 @@ export class DynamoDbTokenRepository implements TokenRepositoryInterface {
     }
 
     public getToken(): Promise<AccessToken|null> {
-        return undefined;
+        return new Promise((resolve: (data: AccessToken|null) => void, reject: (err: any) => void) => {
+            this.dynamoDb
+                .get({
+                    Key: {
+                        primaryKey: this.primaryKey
+                    },
+                    TableName: this.tableName
+                }, (err: any, res: dynamoDbGet) => {
+                    if (err) {
+                        reject(err);
+
+                        return;
+                    }
+
+                    if (!res.hasOwnProperty('Item')) {
+                        resolve(null);
+
+                        return;
+                    }
+
+                    const token: AccessToken = {
+                        access_token: res.Item.data.access_token,
+                        expires_in: res.Item.data.expires_in
+                    };
+
+                    resolve(token);
+                })
+            ;
+        });
     }
 
     public setToken(token: AccessToken): Promise<AccessToken> {
-        return new Promise((resolve: (err: any) => void, reject: (data: any) => void) => {
+        return new Promise((resolve: (data: any) => void, reject: (err: any) => void) => {
             this.dynamoDb
                 .put({
                     Item: {
@@ -33,7 +68,7 @@ export class DynamoDbTokenRepository implements TokenRepositoryInterface {
                         }
                     },
                     TableName: this.tableName
-                }, (err: any, data: any) => {
+                }, (err: any, res: any) => {
                     if (err) {
                         reject(err);
 

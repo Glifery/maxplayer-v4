@@ -17,8 +17,12 @@ export class TokenManager {
             .getToken()
             .then((accessToken: AccessToken|null) => {
                 if (accessToken) {
+                    console.log('Using existed Spotify access token');
+
                     return Promise.resolve(accessToken);
                 }
+
+                console.log('Updating Spotify access token');
 
                 return this.updateToken();
             })
