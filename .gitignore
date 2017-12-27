@@ -4,3 +4,4 @@
 *.serverless*
 npm-debug.log
 backend/lambda/config/*.yml
+src/maxplayer/frontend/.dist

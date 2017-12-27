@@ -15,6 +15,12 @@ custom:
       port: 8000
       inMemory: true
       migrate: true
+  endpoints:
+    player: ''
+    spotify:
+      search_all: spotify/search-all
+    google_music:
+      get_stream: googlemusic/stream
 
 provider:
   name: aws
@@ -43,6 +49,27 @@ resources:
           WriteCapacityUnits: 1
 
 functions:
+  player:
+    name: player
+    handler: handler.player
+    environment:
+      domain_url:
+        Fn::Join:
+          - ""
+          - - "https://"
+            - Ref: "ApiGatewayRestApi"
+            - ".execute-api."
+            - ${self:custom.region}
+            - ".amazonaws.com/"
+            - ${self:custom.stage}
+      url_spotify_search_all: ${self:custom.endpoints.spotify.search_all}
+      url_google_music_get_stream: ${self:custom.endpoints.google_music.get_stream}
+    events:
+      - http:
+          path: ${self:custom.endpoints.player}
+          method: get
+          cors: true
+
   spotifyRefreshToken:
     name: spotify-refresh-token
     handler: handler.spotifyRefreshToken
@@ -59,9 +86,10 @@ functions:
       spotify_client_secret: ${self:custom.config.credentials.spotify.client_secret}
     events:
       - http:
-          path: spotify/search-all
+          path: ${self:custom.endpoints.spotify.search_all}
           method: get
           cors: true
+
   googleMusicGetStream:
     name: google-music-get-stream
     handler: handler.googleMusicGetStream
@@ -70,6 +98,6 @@ functions:
       google_master_token: ${self:custom.config.credentials.google_music.master_token}
     events:
       - http:
-          path: googlemusic/stream
+          path: ${self:custom.endpoints.google_music.get_stream}
           method: get
           cors: true

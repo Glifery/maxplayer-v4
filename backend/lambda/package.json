@@ -6,7 +6,8 @@
     "aws-sdk": "^2.166.0",
     "maxplayer-google-music": "../../src/maxplayer/google-music",
     "maxplayer-serverless": "../../src/maxplayer/serverless",
-    "maxplayer-spotify": "../../src/maxplayer/spotify"
+    "maxplayer-spotify": "../../src/maxplayer/spotify",
+    "maxplayer-frontend": "../../src/maxplayer/frontend"
   },
   "devDependencies": {
     "@types/node": "^8.0.57",
