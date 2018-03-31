@@ -18,6 +18,8 @@ npm:
 	cd src/maxplayer/google-music && npm install
 	cd src/maxplayer/spotify && npm install
 	cd src/maxplayer/frontend && npm install
+	cd src/maxplayer/core && npm install
+	cd src/maxplayer/frontend && npm install
 	make link
 
 link:
@@ -29,4 +31,4 @@ link:
 	cd backend/lambda/node_modules && ln -s ../../../src/maxplayer/frontend maxplayer-frontend
 
 webpack:
-	cd src/maxplayer/frontend && node_modules/.bin/webpack
+	cd src/maxplayer/frontend && node_modules/.bin/webpack --watch

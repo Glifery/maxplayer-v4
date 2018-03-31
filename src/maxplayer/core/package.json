@@ -1,5 +1,8 @@
 {
   "name": "maxplayer-core",
   "version": "1.0.0",
-  "description": "maksplayer core"
+  "description": "maksplayer core",
+  "devDependencies": {
+    "@types/node": "^8.0.57"
+  }
 }
