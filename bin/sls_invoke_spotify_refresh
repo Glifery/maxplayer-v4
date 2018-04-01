@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+cd backend/lambda && sls invoke local -f spotifyRefreshToken

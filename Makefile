@@ -1,34 +1,36 @@
 OS := $(shell uname)
 
-all:
-	make npm
-	make install
-	make webpack
-	make offline
+start:
+	docker-compose up -d
+
+bash:
+	docker exec -it maxplayer_node bash
+
+rebuild:
+	make down
+	docker-compose build --force-rm --no-cache
+
+stop:
+	docker-compose stop
+
+down:
+	docker-compose down
 
 install:
-	cd backend/lambda && sls dynamodb install
+	make npm_install
+	make sls_dynamodb_install
 
-offline:
-	cd backend/lambda && sls offline start
+npm_install:
+	docker exec -i maxplayer_node /bin/bash -c "bin/npm_install"
 
-npm:
-	cd backend/lambda && npm install
-	cd src/maxplayer/serverless && npm install
-	cd src/maxplayer/google-music && npm install
-	cd src/maxplayer/spotify && npm install
-	cd src/maxplayer/frontend && npm install
-	cd src/maxplayer/core && npm install
-	cd src/maxplayer/frontend && npm install
-	make link
+sls_dynamodb_install:
+	docker exec -i maxplayer_node /bin/bash -c "bin/sls_dynamodb_install"
 
-link:
-	rm -rf backend/lambda/node_modules/maxplayer-serverless
-	rm -rf backend/lambda/node_modules/maxplayer-google-music
-	rm -rf backend/lambda/node_modules/maxplayer-frontend
-	cd backend/lambda/node_modules && ln -s ../../../src/maxplayer/serverless maxplayer-serverless
-	cd backend/lambda/node_modules && ln -s ../../../src/maxplayer/google-music maxplayer-google-music
-	cd backend/lambda/node_modules && ln -s ../../../src/maxplayer/frontend maxplayer-frontend
+webpack_watch:
+	docker exec -i -d maxplayer_node /bin/bash -c "bin/webpack_watch"
 
-webpack:
-	cd src/maxplayer/frontend && node_modules/.bin/webpack --watch
+sls_offline:
+	docker exec -i -d maxplayer_node /bin/bash -c "bin/sls_offline"
+
+sls_invoke_spotify_refresh:
+	docker exec -i maxplayer_node /bin/bash -c "bin/sls_invoke_spotify_refresh"

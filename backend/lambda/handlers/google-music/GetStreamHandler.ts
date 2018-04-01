@@ -8,6 +8,11 @@ import {TrackResult} from "../../src/google-music/type/TrackResult";
 import {TrackRequest} from "../../request/google-music/TrackRequest";
 import {TrackResponse} from "../../response/google-music/TrackResponse";
 
+/**
+ * Example
+ *
+ * localhost:3000/spotify/search-all?q=Abba
+ */
 export class GetStreamHandler implements HandlerInterface {
     handle (event: any, context: Context, callback: Callback): null {
         const googleMusic = new GoogleMusic(

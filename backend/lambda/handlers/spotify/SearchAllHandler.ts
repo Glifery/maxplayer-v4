@@ -7,7 +7,9 @@ import {BaseResponse} from "../../response/BaseResponse";
 import {BaseSpotifyHandler} from "./BaseSpotifyHandler";
 
 /**
- * http://localhost:3000/googlemusic/spotify/search-all?q=Эпидемия
+ * Example
+ *
+ * localhost:3000/spotify/search-all?q=Abba
  */
 export class SearchAllHandler extends BaseSpotifyHandler {
     handleRequest (event: HttpRequest, spotify: SpotifyWebApi): Promise<BaseResponse> {

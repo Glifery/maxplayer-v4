@@ -29,14 +29,14 @@ export class TokenManager {
         ;
     }
 
-    public storeToken(token: AccessToken): Promise<AccessToken> {
-        return this.repository.setToken(token);
-    }
-
     public updateToken(): Promise<AccessToken> {
         return this.spotify
             .clientCredentialsGrant()
-            .then((res: RefreshTokenResponse) => this.repository.setToken(res.body))
-        ;
+            .then((res: RefreshTokenResponse) => this.storeToken(res.body))
+            ;
     };
+
+    private storeToken(token: AccessToken): Promise<AccessToken> {
+        return this.repository.setToken(token);
+    }
 }

@@ -1,0 +1,7 @@
+credentials:
+  google_music:
+    android_id: '<android id>'
+    master_token: '<master token>'
+  spotify:
+    client_id: '<client id>'
+    client_secret: '<client secret>'

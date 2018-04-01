@@ -27,7 +27,7 @@ export class RefreshTokenHandler extends BaseHandler {
         );
 
         tokenManager
-            .updateToken()
+            .getToken()
             .then((token: AccessToken) => {
                 console.log('Token updated:', token);
 

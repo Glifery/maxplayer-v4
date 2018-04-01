@@ -29,7 +29,8 @@ provider:
   stage: dev
   region: eu-central-1
   environment:
-    foo: 123
+    AWS_ACCESS_KEY_ID: ${self:custom.config.credentials.aws.access_key_id}
+    AWS_SECRET_ACCESS_KEY: ${self:custom.config.credentials.aws.access_key_secret}
 
 resources:
   Resources:

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+cd src/maxplayer/frontend && node_modules/.bin/webpack --watch
