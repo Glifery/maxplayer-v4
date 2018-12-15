@@ -16,11 +16,12 @@ custom:
       inMemory: true
       migrate: true
   endpoints:
-    player: ''
+    frontendHtml: ''
+    player: 'player.js'
     spotify:
-      search_all: spotify/search-all
+      search_all: 'spotify/search-all'
     google_music:
-      get_stream: googlemusic/stream
+      get_stream: 'googlemusic/stream'
 
 provider:
   name: aws
@@ -50,6 +51,15 @@ resources:
           WriteCapacityUnits: 1
 
 functions:
+  frontendHtml:
+      name: html
+      handler: handler.frontendHtml
+      events:
+        - http:
+            path: ${self:custom.endpoints.frontendHtml}
+            method: get
+            cors: true
+
   player:
     name: player
     handler: handler.player
