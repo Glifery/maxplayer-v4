@@ -4,7 +4,7 @@
 
 ##### 1. Install
 
-- `Docker` is required
+- *docker-compose* is required
 - `make start` for start container
 - `make install` for NPM and DynamoDb install
 

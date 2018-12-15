@@ -4,10 +4,11 @@
   "description": "Google Music",
   "dependencies": {
     "aws-sdk": "^2.166.0",
+    "maxplayer-frontend": "../../src/maxplayer/frontend",
     "maxplayer-google-music": "../../src/maxplayer/google-music",
     "maxplayer-serverless": "../../src/maxplayer/serverless",
     "maxplayer-spotify": "../../src/maxplayer/spotify",
-    "maxplayer-frontend": "../../src/maxplayer/frontend"
+    "serverless-dynamodb-client": "0.0.2"
   },
   "devDependencies": {
     "@types/node": "^8.0.57",
