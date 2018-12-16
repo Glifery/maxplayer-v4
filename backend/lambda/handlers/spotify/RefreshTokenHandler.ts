@@ -11,7 +11,11 @@ import {BaseHandler} from "../BaseHandler";
  * sls invoke local -f spotifyRefreshToken
  */
 export class RefreshTokenHandler extends BaseHandler {
-    handle (event: HttpRequest, context: Context, callback: Callback): null {
+    handle (event: HttpRequest, context: Context, callback?: Callback): null {
+        if (!process.env.spotify_client_id || !process.env.spotify_client_secret) {
+            throw new Error('Either \'spotify_client_id\' or \'spotify_client_secret\' parameter is empty');
+        }
+
         const tokenManager = new TokenManager(
             new SpotifyApi(
                 process.env.spotify_client_id,
@@ -36,7 +40,9 @@ export class RefreshTokenHandler extends BaseHandler {
                     body: `The token have been successfully updated`
                 };
 
-                callback(null, response);
+                if (callback) {
+                    callback(null, response);
+                }
             })
             .catch((error: any) => {
                 console.log('ERROR!!!!!!!!!!');
@@ -53,7 +59,9 @@ export class RefreshTokenHandler extends BaseHandler {
                     })
                 };
 
-                callback(error, response);
+                if (callback) {
+                    callback(error, response);
+                }
             })
         ;
 

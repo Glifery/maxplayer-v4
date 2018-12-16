@@ -17,7 +17,11 @@ import {BaseResponse} from "../../response/BaseResponse";
 export abstract class BaseSpotifyHandler extends BaseHandler {
     abstract handleRequest (event: HttpRequest, spotify: SpotifyApi): Promise<BaseResponse>;
 
-    handle (event: HttpRequest, context: Context, callback: Callback): null {
+    handle (event: HttpRequest, context: Context, callback?: Callback): null {
+        if (!process.env.spotify_client_id || !process.env.spotify_client_secret) {
+            throw new Error('Either \'spotify_client_id\' or \'spotify_client_secret\' parameter is empty');
+        }
+
         const spotifyApi = new SpotifyApi(
             process.env.spotify_client_id,
             process.env.spotify_client_secret
@@ -47,7 +51,9 @@ export abstract class BaseSpotifyHandler extends BaseHandler {
                     body: JSON.stringify(result.expose())
                 };
 
-                callback(null, response);
+                if (callback) {
+                    callback(null, response);
+                }
             })
             .catch((error: any) => {
                 if (error.hasOwnProperty('statusCode') && error.statusCode == 401) {
@@ -68,7 +74,9 @@ export abstract class BaseSpotifyHandler extends BaseHandler {
                     })
                 };
 
-                callback(error, response);
+                if (callback) {
+                    callback(error, response);
+                }
             })
         ;
 

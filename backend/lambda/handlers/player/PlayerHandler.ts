@@ -4,11 +4,11 @@ import {HttpContentTypeResponse} from "../../src/serverless/response/HttpContent
 import * as fs from "fs";
 
 export class PlayerHandler implements HandlerInterface {
-    handle (event: any, context: Context, callback: Callback): null {
+    handle (event: any, context: Context, callback?: Callback): null {
         // fs.readFile(__dirname + '/../../../response/player/index.html', (error, content) => {
         // fs.readFile(__dirname + '/../../../.assets/service/index.js', (error, content) => {
         fs.readFile(__dirname + '/../../../src/frontend/.dist/index.js', (error, content) => {
-            if (error) {
+            if (error && callback) {
                 callback(error);
 
                 return;
@@ -22,7 +22,9 @@ export class PlayerHandler implements HandlerInterface {
                 body: content.toString()
             };
 
-            callback(null, response);
+            if (callback) {
+                callback(null, response);
+            }
         });
 
         return null;

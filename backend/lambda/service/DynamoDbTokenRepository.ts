@@ -1,6 +1,6 @@
 import {TokenRepositoryInterface} from "../src/spotify/service/TokenRepositoryInterface";
 import {AccessToken} from "../src/spotify/type/util/AccessToken";
-import {DynamoDB} from "aws-sdk";
+import {AWSError, DynamoDB} from "aws-sdk";
 import DocumentClient = DynamoDB.DocumentClient;
 
 type dynamoDbGet = {
@@ -32,7 +32,7 @@ export class DynamoDbTokenRepository implements TokenRepositoryInterface {
                         primaryKey: this.primaryKey
                     },
                     TableName: this.tableName
-                }, (err: any, res: dynamoDbGet) => {
+                }, (err: AWSError, res: DocumentClient.GetItemOutput) => {
                     if (err) {
                         reject(err);
 
@@ -43,6 +43,10 @@ export class DynamoDbTokenRepository implements TokenRepositoryInterface {
                         resolve(null);
 
                         return;
+                    }
+
+                    if (!res.Item || !res.Item.data || !res.Item.data.access_token || !res.Item.data.expires_in) {
+                        throw new Error('Could not get either \'access_token\' or \'expires_in\'');
                     }
 
                     const token: AccessToken = {

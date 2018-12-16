@@ -14,7 +14,11 @@ import {TrackResponse} from "../../response/google-music/TrackResponse";
  * localhost:3000/spotify/search-all?q=Abba
  */
 export class GetStreamHandler implements HandlerInterface {
-    handle (event: any, context: Context, callback: Callback): null {
+    handle (event: any, context: Context, callback?: Callback): null {
+        if (!process.env.google_android_id || !process.env.google_master_token) {
+            throw new Error('Either \'google_android_id\' or \'google_master_token\' parameter is empty');
+        }
+
         const googleMusic = new GoogleMusic(
             new GoogleMusicGateway(
                 new GoogleMusicCredentials(
@@ -39,7 +43,9 @@ export class GetStreamHandler implements HandlerInterface {
                     body: JSON.stringify(result.expose())
                 };
 
-                callback(null, response);
+                if (callback) {
+                    callback(null, response);
+                }
             })
             .catch((error: any) => {
                 console.log('ERROR!!!!!!!!!!');
@@ -56,7 +62,9 @@ export class GetStreamHandler implements HandlerInterface {
                     })
                 };
 
-                callback(error, response);
+                if (callback) {
+                    callback(error, response);
+                }
             })
         ;
 

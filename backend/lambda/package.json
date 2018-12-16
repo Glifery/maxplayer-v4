@@ -7,8 +7,7 @@
     "maxplayer-frontend": "../../src/maxplayer/frontend",
     "maxplayer-google-music": "../../src/maxplayer/google-music",
     "maxplayer-serverless": "../../src/maxplayer/serverless",
-    "maxplayer-spotify": "../../src/maxplayer/spotify",
-    "serverless-dynamodb-client": "0.0.2"
+    "maxplayer-spotify": "../../src/maxplayer/spotify"
   },
   "devDependencies": {
     "@types/node": "^8.0.57",

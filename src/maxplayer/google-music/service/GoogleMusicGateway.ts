@@ -1,18 +1,14 @@
 import {GoogleMusicCredentials} from "../domain/GoogleMusicCredentials";
-import * as playmusic from 'playmusic';
-// declare module 'playmusic';
-// declare module '../type/playmusic';
+import PlayMusic, * as pm from "playmusic";
 import {Entries} from "../type/Entries";
-// import PlayMusic = require("../type/playmusic");
-// declare const playmusic: any;
 
 export class GoogleMusicGateway {
     private credentials: GoogleMusicCredentials;
-    private playmusic: any;
+    private playmusic: PlayMusic;
 
     constructor (credentials: GoogleMusicCredentials) {
         this.credentials    = credentials;
-        this.playmusic      = new playmusic();
+        this.playmusic      = new pm();
     }
 
     init (): Promise<null> {

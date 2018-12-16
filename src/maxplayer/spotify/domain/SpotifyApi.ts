@@ -3,7 +3,7 @@ import * as SpotifyWebApi from 'spotify-web-api-node';
 export class SpotifyApi {
     private _spotifyWebApi: SpotifyWebApi;
 
-    constructor (clientId: string | undefined, clientSecret: string | undefined) {
+    constructor (clientId: string, clientSecret: string) {
         this._spotifyWebApi = new SpotifyWebApi({
             clientId : clientId,
             clientSecret : clientSecret

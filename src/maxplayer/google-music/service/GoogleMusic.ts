@@ -6,10 +6,11 @@ import {TrackResult} from "../type/TrackResult";
 
 export class GoogleMusic {
     private gateway: GoogleMusicGateway;
-    private requestEntryPoint: Promise<null>;
+    private requestEntryPoint: Promise<null> | null;
 
     constructor (gateway: GoogleMusicGateway) {
         this.gateway = gateway;
+        this.requestEntryPoint = null;
     }
 
     private initGatewayRequest (): Promise<null> {
