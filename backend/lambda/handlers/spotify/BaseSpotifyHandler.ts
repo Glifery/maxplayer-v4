@@ -1,7 +1,7 @@
 import {Context, Callback} from "aws-lambda";
 import {HttpResponse} from "../../src/serverless/response/HttpResponse";
 import {HttpRequest} from "../../src/serverless/request/HttpRequest";
-import * as SpotifyWebApi from 'spotify-web-api-node';
+import {SpotifyApi} from "../../src/spotify/domain/SpotifyApi";
 import {SearchAllRequest} from "../../request/spotify/SearchAllRequest";
 import {SearchAllResponse} from "../../response/spotify/SearchAllResponse";
 import {SearchAllResponse as SpotifyResponse} from "../../src/spotify/type/api/search-all/SearchAllResponse";
@@ -15,14 +15,16 @@ import {BaseResponse} from "../../response/BaseResponse";
  * http://localhost:3000/googlemusic/spotify/search-all?q=Эпидемия
  */
 export abstract class BaseSpotifyHandler extends BaseHandler {
-    abstract handleRequest (event: HttpRequest, spotify: SpotifyWebApi): Promise<BaseResponse>;
+    abstract handleRequest (event: HttpRequest, spotify: SpotifyApi): Promise<BaseResponse>;
 
     handle (event: HttpRequest, context: Context, callback: Callback): null {
+        const spotifyApi = new SpotifyApi(
+            process.env.spotify_client_id,
+            process.env.spotify_client_secret
+        );
+
         const tokenManager = new TokenManager(
-            new SpotifyWebApi({
-                clientId : process.env.spotify_client_id,
-                clientSecret : process.env.spotify_client_secret
-            }),
+            spotifyApi,
             new DynamoDbTokenRepository(
                 this.prepareDynamoDbInstance(),
                 {
@@ -31,14 +33,13 @@ export abstract class BaseSpotifyHandler extends BaseHandler {
                 }
             )
         );
-        const spotify = new SpotifyWebApi();
 
         tokenManager
             .getToken()
             .then((token: AccessToken) => {
-                spotify.setAccessToken(token.access_token);
+                spotifyApi.api.setAccessToken(token.access_token);
 
-                return this.handleRequest(event, spotify);
+                return this.handleRequest(event, spotifyApi);
             })
             .then((result: BaseResponse) => {
                 const response: HttpResponse = {

@@ -1,14 +1,14 @@
 import {TokenRepositoryInterface} from "./TokenRepositoryInterface";
-import * as SpotifyWebApi from 'spotify-web-api-node';
+import {SpotifyApi} from "../domain/SpotifyApi";
 import {RefreshTokenResponse} from "../type/api/refresh-token/RefreshTokenResponse";
 import {AccessToken} from "../type/util/AccessToken";
 
 export class TokenManager {
-    private spotify: SpotifyWebApi;
+    private SpotifyApi: SpotifyApi;
     private repository: TokenRepositoryInterface;
 
-    constructor (spotify: SpotifyWebApi, repository: TokenRepositoryInterface) {
-        this.spotify = spotify;
+    constructor (SpotifyApi: SpotifyApi, repository: TokenRepositoryInterface) {
+        this.SpotifyApi = SpotifyApi;
         this.repository = repository;
     }
 
@@ -30,10 +30,9 @@ export class TokenManager {
     }
 
     public updateToken(): Promise<AccessToken> {
-        return this.spotify
-            .clientCredentialsGrant()
-            .then((res: RefreshTokenResponse) => this.storeToken(res.body))
-            ;
+        return this.SpotifyApi
+            .api.clientCredentialsGrant()
+            .then((res: RefreshTokenResponse) => this.storeToken(res.body));
     };
 
     private storeToken(token: AccessToken): Promise<AccessToken> {
