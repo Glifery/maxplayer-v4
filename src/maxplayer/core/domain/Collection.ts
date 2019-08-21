@@ -20,9 +20,9 @@ export class Collection<T> {
     set (elements: T[]): Collection<T> {
         this.reset();
 
-        for (let element of elements) {
-            this.add(element);
-        }
+        // for (let element of elements) {
+        //     this.add(element);
+        // }
 
         return this;
     }

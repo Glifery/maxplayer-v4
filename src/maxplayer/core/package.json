@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "maksplayer core",
   "devDependencies": {
-    "@types/node": "^8.0.57"
+    "@types/node": "^8.0.57",
+    "@types/request-promise-native": "^1.0.16"
+  },
+  "dependencies": {
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7"
   }
 }

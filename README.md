@@ -8,14 +8,25 @@
 - `make start` for start container
 - `make install` for NPM and DynamoDb install
 
-##### either 2. Develop
+##### 2. Run backend
+Interactive mode
 
 - `make bash` for enter docker terminal 
 - `bin/sls_offline` for start DynamoDb/SLS Offline in terminal
 
-##### or 2. Run
+Background mode
 
 - `make sls_offline` for start DynamoDb/SLS Offline in background
+
+##### 3. Run frontend
+
+Interactive mode
+- `make bash` for enter docker terminal 
+- `bin/webpack_watch` for start TypeScript autocompiling
+
+Background mode
+
+- `make webpack_watch` for start TypeScript autocompiling in background
 
 ### Offline endpoints examples
 

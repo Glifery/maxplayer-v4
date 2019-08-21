@@ -18,5 +18,12 @@ module.exports = {
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, '.dist')
+    },
+    node: { // https://github.com/webpack-contrib/css-loader/issues/447
+        crypto: true,
+        stream: true,
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty',
     }
 };
