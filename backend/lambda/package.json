@@ -4,6 +4,9 @@
   "description": "Google Music",
   "dependencies": {
     "aws-sdk": "^2.166.0",
+    "spotify-web-api-node": "^2.5.0",
+    "@types/aws-lambda": "0.0.17",
+    "playmusic": "git+https://github.com/jamon/playmusic.git",
     "maxplayer-frontend": "../../src/maxplayer/frontend",
     "maxplayer-google-music": "../../src/maxplayer/google-music",
     "maxplayer-serverless": "../../src/maxplayer/serverless",

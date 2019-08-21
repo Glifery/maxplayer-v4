@@ -1,4 +1,4 @@
-FROM node:6.11
+FROM node:12
 
 ENV TERM=xterm
 

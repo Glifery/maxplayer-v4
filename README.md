@@ -10,7 +10,7 @@
 
 ##### either 2. Develop
 
-- `docker exec -it maxplayer_node sh` for enter docker terminal 
+- `make bash` for enter docker terminal 
 - `bin/sls_offline` for start DynamoDb/SLS Offline in terminal
 
 ##### or 2. Run

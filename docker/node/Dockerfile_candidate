@@ -1,9 +1,0 @@
-FROM node:8.14.0-jessie
-
-ENV TERM=xterm
-
-RUN apt-get update && apt-get install -y default-jre vim nano
-
-RUN apt-get -y autoremove && apt-get clean && apt-get autoclean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
-
-RUN npm config set unsafe-perm=true && npm install -g serverless jscs mocha sequelize-cli
