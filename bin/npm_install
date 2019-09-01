@@ -11,6 +11,10 @@ cd src/maxplayer/frontend && npm install && cd ../../../
 rm -rf backend/lambda/node_modules/maxplayer-serverless
 rm -rf backend/lambda/node_modules/maxplayer-google-music
 rm -rf backend/lambda/node_modules/maxplayer-frontend
+rm -rf backend/lambda/node_modules/maxplayer-spotify
+rm -rf backend/lambda/node_modules/maxplayer-core
 cd backend/lambda/node_modules && ln -s ../../../src/maxplayer/serverless maxplayer-serverless && cd ../../../
 cd backend/lambda/node_modules && ln -s ../../../src/maxplayer/google-music maxplayer-google-music && cd ../../../
 cd backend/lambda/node_modules && ln -s ../../../src/maxplayer/frontend maxplayer-frontend && cd ../../../
+cd backend/lambda/node_modules && ln -s ../../../src/maxplayer/spotify maxplayer-spotify && cd ../../../
+cd backend/lambda/node_modules && ln -s ../../../src/maxplayer/core maxplayer-core && cd ../../../

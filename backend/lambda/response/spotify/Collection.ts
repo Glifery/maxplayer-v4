@@ -1,5 +1,5 @@
 export class Collection<T> {
-    private elements: T[];
+    private elements: T[] = [];
 
     constructor (elements: T[] = []) {
         this.set(elements);

@@ -7,6 +7,7 @@
     "spotify-web-api-node": "^2.5.0",
     "@types/aws-lambda": "0.0.17",
     "playmusic": "git+https://github.com/jamon/playmusic.git",
+    "maxplayer-core": "../../src/maxplayer/core",
     "maxplayer-frontend": "../../src/maxplayer/frontend",
     "maxplayer-google-music": "../../src/maxplayer/google-music",
     "maxplayer-serverless": "../../src/maxplayer/serverless",

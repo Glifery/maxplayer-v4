@@ -6,23 +6,24 @@ import {Artist} from "./Artist";
 import {Album} from "./Album";
 import {Track} from "./Track";
 import {BaseResponse} from "../BaseResponse";
+import {Collection} from "./Collection";
 
 export class SearchAllResponse implements BaseResponse {
-    private artists: Artist[];
-    private albums: Album[];
-    private tracks: Track[];
+    private artists: Collection<Artist>;
+    private albums: Collection<Album>;
+    private tracks: Collection<Track>;
 
     private constructor (artists: SpotifyArtist[], albums: SpotifyAlbum[], tracks: SpotifyTrack[]) {
-        this.artists = artists.map((artist: SpotifyArtist) => Artist.createFromSpotify(artist));
-        this.albums = albums.map((album: SpotifyAlbum) => Album.createFromSpotify(album));
-        this.tracks = tracks.map((track: SpotifyTrack) => Track.createFromSpotify(track));
+        this.artists = new Collection(artists.map((artist: SpotifyArtist) => Artist.createFromSpotify(artist)));
+        this.albums = new Collection(albums.map((album: SpotifyAlbum) => Album.createFromSpotify(album)));
+        this.tracks = new Collection(tracks.map((track: SpotifyTrack) => Track.createFromSpotify(track)));
     }
 
     public expose (): {} {
         return {
-            artists: this.artists.map((artist: Artist) => artist.expose()),
-            albums: this.albums.map((album: Album) => album.expose()),
-            tracks: this.tracks.map((track: Track) => track.expose())
+            artists: this.artists.getElements().map((artist: Artist) => artist.expose()),
+            albums: this.albums.getElements().map((album: Album) => album.expose()),
+            tracks: this.tracks.getElements().map((track: Track) => track.expose())
         };
     }
 
@@ -32,5 +33,17 @@ export class SearchAllResponse implements BaseResponse {
             response.body.albums.items,
             response.body.tracks.items
         );
+    }
+
+    public getArtists(): Collection<Artist> {
+        return this.artists;
+    }
+
+    public getAlbums(): Collection<Album> {
+        return this.albums;
+    }
+
+    public getTracks(): Collection<Track> {
+        return this.tracks;
     }
 }
